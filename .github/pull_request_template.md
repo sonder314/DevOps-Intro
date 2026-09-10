@@ -5,7 +5,7 @@
 - 
 
 ## Testing
-<!-- How did you verify it? -->
+<!-- List the commands you ran and their results. -->
 
 ## Checklist
 - [ ] Title is a clear sentence (≤ 70 chars)
