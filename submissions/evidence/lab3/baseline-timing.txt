@@ -1,0 +1,24 @@
+Lab 3 baseline CI timing
+========================
+
+Configuration: no setup-go cache, Go 1.24 only, no path filter
+Workflow run: https://github.com/sonder314/DevOps-Intro/actions/runs/34767575425
+Commit: bdbd14fe30eecc6d4f0fd23549298fae8e1685fe
+Conclusion: success
+Run started: 2026-09-13T16:06:21Z
+Run completed: 2026-09-13T16:06:57Z
+Wall-clock: 36 s
+
+Jobs (started_at to completed_at):
+- vet: 22 s
+- test: 27 s
+- lint: 26 s
+- ci-ok: 4 s
+
+Longest measured work steps:
+- go vet: 16 s
+- go test -race -count=1 ./...: 21 s
+- golangci-lint: 21 s
+
+Source: public GitHub Actions run and jobs API responses, collected on
+2026-09-13 after run completion.
