@@ -6,6 +6,8 @@ Branch: `feature/lab3`
 
 Chosen path: **GitHub Actions**
 
+Submission PR: [inno-devops-labs/DevOps-Intro#1563](https://github.com/inno-devops-labs/DevOps-Intro/pull/1563)
+
 I chose GitHub Actions because the repository and pull-request workflow are on
 GitHub. Keeping the gate beside the pull request makes the status checks visible
 where I decide whether a change is ready to merge.
@@ -250,5 +252,5 @@ the application gains enough dependencies or tests to change the bottleneck.
 - [x] Branch protection requires the robust `ci-ok` gate.
 - [x] Branch-protection screenshot saved in the repository.
 - [x] Docs-only skip PR demonstrated and recorded.
-- [ ] Final upstream PR opened and newest commit checked as Verified.
+- [x] Final upstream PR opened and newest commit checked as Verified.
 - [ ] PR URL submitted through Moodle before the deadline.
