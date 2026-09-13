@@ -1,0 +1,27 @@
+name: Documentation gate
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "app/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "app/**"
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+jobs:
+  ci-ok:
+    name: ci-ok
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Confirm that heavyweight CI is unnecessary
+        run: echo "No application or CI workflow files changed."
