@@ -14,18 +14,19 @@ where I decide whether a change is ready to merge.
 
 My workflow is in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml). It
 runs independent `vet`, `test` and `lint` jobs on `ubuntu-24.04`, followed by one
-`ci-ok` aggregation check. The current green recovery run is
-[34768511781](https://github.com/sonder314/DevOps-Intro/actions/runs/34768511781).
+`ci-ok` aggregation check. The final full run in my fork is
+[34768910452](https://github.com/sonder314/DevOps-Intro/actions/runs/34768910452).
 The full cached matrix run completed in 48 seconds, below the 90-second bonus
 target.
 
 ## Task 1 — PR gate
 
-The workflow runs for pushes to `main` and pull requests targeting `main` when
-the application or CI workflow changes. Both `vet` and race-enabled tests run
-against Go 1.23 and 1.24. Lint runs independently with golangci-lint v2.5.0.
-`ci-ok` uses `if: always()` and depends on all three job groups, so any failed,
-cancelled or skipped dependency makes the required gate fail.
+The heavyweight workflow runs for pushes to `main` and pull requests targeting
+`main` when the application or a CI workflow changes. Both `vet` and
+race-enabled tests run against Go 1.23 and 1.24. Lint runs independently with
+golangci-lint v2.5.0. `ci-ok` uses `if: always()` and depends on all three job
+groups, so any failed, cancelled or skipped dependency makes the required gate
+fail.
 
 I pinned the execution environment and every reusable action:
 
@@ -120,14 +121,34 @@ is the only reusable content here. A dependency-heavy application would benefit
 mainly in dependency setup and compilation steps.
 
 The matrix has `fail-fast: false`, so both Go cells report their result even when
-one fails. The final trigger filters to `app/**` and
-`.github/workflows/ci.yml`; a repository-documentation-only PR is recorded in
-the docs-only demonstration below.
+one fails. The heavyweight trigger filters to `app/**` and
+`.github/workflows/**`; a repository-documentation-only PR is recorded in the
+demonstration below.
 
 ### Docs-only demonstration
 
-Pending final merge into my fork's `main`; the demonstration PR and proof of no
-CI run will be recorded here before submission.
+I opened [docs-only PR #3](https://github.com/sonder314/DevOps-Intro/pull/3)
+with one file under `docs/` and no application or workflow changes. The
+heavyweight `CI` workflow produced no run, proving that its path filter skipped
+the PR. The first version also left required `ci-ok` at `Expected`, captured in
+[`docs-only-pending.png`](evidence/lab3/docs-only-pending.png). This is GitHub's
+documented behavior when an entire required workflow is skipped by a path
+filter, so waiting longer could never complete it.
+
+I fixed the interaction in
+[PR #4](https://github.com/sonder314/DevOps-Intro/pull/4) with a mutually
+exclusive [documentation gate](../.github/workflows/docs-only.yml). It runs one
+lightweight `ci-ok` only when neither `app/**` nor `.github/workflows/**`
+changed. After the fix, the documentation runs
+[34770289000](https://github.com/sonder314/DevOps-Intro/actions/runs/34770289000)
+and
+[34770308456](https://github.com/sonder314/DevOps-Intro/actions/runs/34770308456)
+completed successfully with no vet, test or lint jobs. PR #3 then merged into
+protected `main`; its squash commit `a23d3a13b6c9da7b8781da22d0716d6dcba23f21`
+is Verified. This preserves a stable required check without spending the full
+matrix cost on documentation. GitHub describes the underlying pending-check
+behavior in
+[Troubleshooting required status checks](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/troubleshooting-required-status-checks#handling-skipped-but-required-checks).
 
 ### Task 2 design questions
 
@@ -187,6 +208,8 @@ I applied these measures in addition to Task 2's cache, matrix and path filter:
    platform default duration.
 6. I disabled persisted checkout credentials because none of the checks pushes
    repository changes; later shell steps therefore cannot reuse that token.
+7. I use a one-step documentation gate so docs-only pull requests satisfy branch
+   protection without provisioning five Go/linter jobs.
 
 The timings do not isolate one variable per run, so I do not claim causation for
 normal runner variance. They show the observed step changes after the final
@@ -226,6 +249,6 @@ the application gains enough dependencies or tests to change the bottleneck.
 - [x] Three actual timing scenarios and per-step profile are recorded.
 - [x] Branch protection requires the robust `ci-ok` gate.
 - [x] Branch-protection screenshot saved in the repository.
-- [ ] Docs-only skip PR demonstrated and recorded.
+- [x] Docs-only skip PR demonstrated and recorded.
 - [ ] Final upstream PR opened and newest commit checked as Verified.
 - [ ] PR URL submitted through Moodle before the deadline.

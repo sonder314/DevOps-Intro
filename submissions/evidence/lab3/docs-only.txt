@@ -1,0 +1,28 @@
+Lab 3 documentation-only path-filter demonstration
+===================================================
+
+Pull request: https://github.com/sonder314/DevOps-Intro/pull/3
+Head commit: 244b1cfed7d25a0b78f05bbc1120718a9819790f
+Changed path: docs/lab3-path-filter-check.md
+
+Initial observation:
+- The heavyweight CI workflow created no run.
+- Required ci-ok remained Expected because the entire workflow was skipped.
+- Screenshot: docs-only-pending.png
+
+Resolution:
+- PR #4 added a mutually exclusive lightweight Documentation gate.
+- Heavy CI paths: app/** and .github/workflows/**
+- Documentation gate paths-ignore: app/** and .github/workflows/**
+- Both workflows report the stable required check name ci-ok, but their path
+  conditions ensure that only one runs for a given change set.
+
+Successful documentation-gate runs:
+- https://github.com/sonder314/DevOps-Intro/actions/runs/34770289000
+- https://github.com/sonder314/DevOps-Intro/actions/runs/34770308456
+
+Neither run contained vet, test or lint jobs. PR #3 merged into protected main
+as Verified squash commit a23d3a13b6c9da7b8781da22d0716d6dcba23f21.
+
+Source: public GitHub pull request, workflow run, jobs and commit API responses,
+collected on 2026-09-13 after merge.
