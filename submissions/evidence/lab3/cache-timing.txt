@@ -1,0 +1,29 @@
+Lab 3 cached single-version CI timing
+=====================================
+
+Configuration: setup-go cache enabled, Go 1.24 only, no path filter
+Workflow run: https://github.com/sonder314/DevOps-Intro/actions/runs/34767800267
+Commit: 47d1a2fac39a8008d818d47f81796ce0086cd54f
+Conclusion: success
+Run started: 2026-09-13T16:10:49Z
+Run completed: 2026-09-13T16:11:28Z
+Wall-clock: 39 s
+
+Jobs (started_at to completed_at):
+- vet: 22 s
+- test: 32 s
+- lint: 22 s
+- ci-ok: 2 s
+
+Selected steps:
+- vet setup-go: 1 s; go vet: 16 s
+- test setup-go: 2 s; race-enabled tests: 24 s
+- lint setup-go: 1 s; golangci-lint: 17 s
+
+The three-second regression relative to the 36-second baseline is normal runner
+variance. QuickNotes has no require block and no go.sum, so there are no external
+modules to restore. The cache key therefore uses the only dependency manifest,
+app/go.mod; build-cache reuse is the only possible benefit for this application.
+
+Source: public GitHub Actions run and jobs API responses, collected on
+2026-09-13 after run completion.
