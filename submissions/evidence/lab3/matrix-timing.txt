@@ -1,0 +1,29 @@
+Lab 3 cached matrix CI timing
+================================
+
+Configuration: setup-go cache, Go 1.23 + 1.24 matrix, fail-fast disabled,
+path filters enabled
+Workflow run: https://github.com/sonder314/DevOps-Intro/actions/runs/34768002829
+Commit: 826df8f8a9ea5604f044abacad6959cb4c187433
+Conclusion: success
+Run started: 2026-09-13T16:14:54Z
+Run completed: 2026-09-13T16:15:42Z
+Wall-clock: 48 s
+
+Jobs (started_at to completed_at):
+- vet (Go 1.23): 35 s; setup-go 8 s; go vet 17 s
+- vet (Go 1.24): 12 s; setup-go 3 s; go vet 3 s
+- test (Go 1.23): 38 s; setup-go 9 s; tests 22 s
+- test (Go 1.24): 30 s; setup-go 2 s; tests 22 s
+- lint: 12 s; setup-go 1 s; golangci-lint 5 s
+- ci-ok: 3 s
+
+The whole workflow remained below the 90-second bonus target. Go 1.23 jobs were
+the slowest cells. Because app/go.mod declares Go 1.24, Go's automatic toolchain
+selection may fetch a compatible newer toolchain when a 1.23 bootstrap is
+selected; this explains why those cells can pass but take longer. I kept the
+repository's required Go 1.24 directive instead of changing application metadata
+just to make a timing result look faster.
+
+Source: public GitHub Actions run and jobs API responses, collected on
+2026-09-13 after run completion.

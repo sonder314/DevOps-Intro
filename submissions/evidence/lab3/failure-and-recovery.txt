@@ -1,0 +1,48 @@
+Lab 3 deliberate failure and recovery
+=====================================
+
+Deliberate failure commit:
+b2b963ed141898104136259817c99fe9831998c4
+test(lab3): demonstrate CI gate failure
+GitHub verification: verified
+
+The commit changed TestCreateNote_RoundTrip to expect HTTP 200 although the
+successful POST contract returns HTTP 201. The local and CI failure was:
+
+--- FAIL: TestCreateNote_RoundTrip
+    handlers_test.go:64: expected 200, got 201: {"id":1,"title":"first",...}
+FAIL
+
+Failed run:
+https://github.com/sonder314/DevOps-Intro/actions/runs/34768409673
+
+Observed completed checks:
+- lint: success
+- vet (Go 1.23): success
+- vet (Go 1.24): success
+- test (Go 1.23): failure
+- test (Go 1.24): failure
+- ci-ok: failure
+
+The public pull-request API reported mergeable_state=unstable while the required
+ci-ok check was failing. The main branch rule required ci-ok and required the
+branch to be up to date, so the merge conditions were not satisfied.
+
+Recovery commit:
+fcf2c1e9d450626a10ba91c54fa0ab5bca3c6b6a
+Revert "test(lab3): demonstrate CI gate failure"
+GitHub verification: verified
+
+Green recovery run:
+https://github.com/sonder314/DevOps-Intro/actions/runs/34768511781
+
+Observed completed checks after recovery:
+- lint: success
+- vet (Go 1.23): success
+- vet (Go 1.24): success
+- test (Go 1.23): success
+- test (Go 1.24): success
+- ci-ok: success
+
+Source: public GitHub commit, pull request, workflow run and jobs API responses,
+collected on 2026-09-13 after both runs completed.
