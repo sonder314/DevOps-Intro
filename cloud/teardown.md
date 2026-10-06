@@ -6,7 +6,7 @@ After collecting the required evidence, I can suspend or delete the web service 
 
 ## GitHub Container Registry
 
-The public `v0.1.0` image is release evidence, so I leave it available for assessment. If removal is required later, I can open my GitHub profile, select **Packages**, open `devops-intro/quicknotes`, and delete the package version from its settings.
+The public `v0.1.0` and `v0.1.1` images are release evidence, so I leave them available for assessment. If removal is required later, I can open my GitHub profile, select **Packages**, open `devops-intro/quicknotes`, and delete the package versions from its settings.
 
 ## Local state
 

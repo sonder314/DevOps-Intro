@@ -1,0 +1,79 @@
+* Host quicknotes-lab10-5vo7.onrender.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 216.24.57.18, 216.24.57.16
+*   Trying 216.24.57.18:443...
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [1589 bytes data]
+* SSL Trust Anchors:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+*   CApath: /etc/ssl/certs
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [1210 bytes data]
+* TLSv1.3 (IN), TLS change cipher, Change cipher spec (1):
+{ [1 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [19 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [2492 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [79 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519MLKEM768 / id-ecPublicKey
+* ALPN: server accepted h2
+* Server certificate:
+*   subject: CN=onrender.com
+*   start date: Sep 21 22:04:31 2026 GMT
+*   expire date: Dec 20 23:04:28 2026 GMT
+*   issuer: C=US; O=Google Trust Services; CN=WE1
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA384
+*   Certificate level 2: Public key type EC/secp384r1 (384/192 Bits/secBits), signed using ecdsa-with-SHA384
+*   subjectAltName: "quicknotes-lab10-5vo7.onrender.com" matches cert's "*.onrender.com"
+* SSL certificate verified via OpenSSL.
+* Established connection to quicknotes-lab10-5vo7.onrender.com (216.24.57.18 port 443) from 10.91.69.110 port 50478
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://quicknotes-lab10-5vo7.onrender.com/health
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: quicknotes-lab10-5vo7.onrender.com]
+* [HTTP/2] [1] [:path: /health]
+* [HTTP/2] [1] [user-agent: curl/8.18.0]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> GET /health HTTP/2
+> Host: quicknotes-lab10-5vo7.onrender.com
+> User-Agent: curl/8.18.0
+> Accept: */*
+>
+* Request completely sent off
+} [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+< HTTP/2 200
+< date: Tue, 06 Oct 2026 08:04:09 GMT
+< content-type: application/json
+< cache-control: no-store
+< content-security-policy: default-src 'none'; frame-ancestors 'none'; base-uri 'none'
+< referrer-policy: no-referrer
+< rndr-id: 2081a020-4a49-4ce2
+< server: cloudflare
+< vary: Accept-Encoding
+< x-content-type-options: nosniff
+< x-frame-options: DENY
+< x-render-origin-server: Render
+< cf-cache-status: DYNAMIC
+< cf-ray: a46326ed6964ae32-AMS
+< alt-svc: h3=":443"; ma=86400
+<
+{ [5 bytes data]
+* Connection #0 to host quicknotes-lab10-5vo7.onrender.com:443 left intact

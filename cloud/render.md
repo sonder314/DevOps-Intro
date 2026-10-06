@@ -7,7 +7,8 @@ Public service URL: <https://quicknotes-lab10-5vo7.onrender.com>
 | Setting | Value |
 |---|---|
 | Source | Existing Image |
-| Image URL | `ghcr.io/sonder314/devops-intro/quicknotes:v0.1.0` |
+| Initial image URL | `ghcr.io/sonder314/devops-intro/quicknotes:v0.1.0` |
+| Current image URL | `ghcr.io/sonder314/devops-intro/quicknotes:v0.1.1` (selected by the CI deploy hook) |
 | Region | Frankfurt (EU Central) |
 | Instance type | Free |
 | Health check path | `/health` |

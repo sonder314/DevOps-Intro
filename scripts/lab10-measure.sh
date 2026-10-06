@@ -47,7 +47,11 @@ case "$MODE" in
     sample="$(( $(awk -F, '$2 == "cold" {count++} END {print count+0}' "$CSV_FILE") + 1 ))"
     printf '%s,cold,%d,%s\n' "$(date --iso-8601=seconds)" "$sample" "$value" \
       | tee -a "$CSV_FILE"
-    echo "Cold sample $sample recorded. Leave the Render service idle for 20+ minutes before the next cold sample."
+    if (( sample >= 3 )); then
+      echo "Cold sample $sample recorded. The required three cold samples are complete."
+    else
+      echo "Cold sample $sample recorded. Leave the Render service idle for 20+ minutes before the next cold sample."
+    fi
     ;;
   note-create)
     curl --fail --silent --show-error \
