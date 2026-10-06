@@ -1,8 +1,8 @@
 # Lab 10 teardown
 
-## Hugging Face Space
+## Render service
 
-After collecting the required evidence, I can remove the deployment from the Space settings by selecting **Delete this Space** and confirming its name. Leaving the free CPU Space sleeping is also acceptable and does not incur a charge.
+After collecting the required evidence, I can suspend or delete the web service from its Render settings. I also remove the `RENDER_DEPLOY_HOOK_URL` GitHub Actions secret if the service is deleted.
 
 ## GitHub Container Registry
 
@@ -10,7 +10,7 @@ The public `v0.1.0` image is release evidence, so I leave it available for asses
 
 ## Local state
 
-I can stop and remove any local test container without affecting either hosted artifact:
+I can stop and remove any local test container without affecting the hosted artifact:
 
 ```bash
 docker rm -f quicknotes-lab10

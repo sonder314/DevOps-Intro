@@ -1,0 +1,34 @@
+v0.1.0: Pulling from sonder314/devops-intro/quicknotes
+a5789fc40e82: Already exists
+990a9c434e5e: Already exists
+39dc083afc39: Already exists
+bf7a4185f015: Already exists
+2780920e5dbf: Already exists
+7c12895b777b: Already exists
+3214acf345c0: Already exists
+52630fc75a18: Already exists
+dd64bf2dd177: Already exists
+b839dfae01f6: Already exists
+dcaa5a89b0cc: Already exists
+96ed2737ae31: Already exists
+32af787a26dc: Pulling fs layer
+7a7ae5cf5b3c: Pulling fs layer
+e4242e5e1482: Pulling fs layer
+e6bcf8ea2708: Pulling fs layer
+a54efb668641: Pulling fs layer
+e6bcf8ea2708: Waiting
+a54efb668641: Waiting
+32af787a26dc: Pull complete
+7a7ae5cf5b3c: Verifying Checksum
+7a7ae5cf5b3c: Download complete
+e6bcf8ea2708: Verifying Checksum
+e6bcf8ea2708: Download complete
+7a7ae5cf5b3c: Pull complete
+e4242e5e1482: Download complete
+e4242e5e1482: Pull complete
+e6bcf8ea2708: Pull complete
+a54efb668641: Download complete
+a54efb668641: Pull complete
+Digest: sha256:417a7e606af7416e180bd76990132dcbcda546bc94cd67b7beadf3519cb30786
+Status: Downloaded newer image for ghcr.io/sonder314/devops-intro/quicknotes:v0.1.0
+ghcr.io/sonder314/devops-intro/quicknotes:v0.1.0

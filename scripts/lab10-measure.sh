@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [[ $# -ne 2 ]]; then
-  echo "Usage: $0 <space-base-url> <verify|warm|cold>" >&2
+  echo "Usage: $0 <service-base-url> <verify|warm|cold|note-create|note-check>" >&2
   exit 2
 fi
 
@@ -47,10 +47,24 @@ case "$MODE" in
     sample="$(( $(awk -F, '$2 == "cold" {count++} END {print count+0}' "$CSV_FILE") + 1 ))"
     printf '%s,cold,%d,%s\n' "$(date --iso-8601=seconds)" "$sample" "$value" \
       | tee -a "$CSV_FILE"
-    echo "Cold sample $sample recorded. Let the Space sleep for 35+ minutes before the next cold sample."
+    echo "Cold sample $sample recorded. Leave the Render service idle for 20+ minutes before the next cold sample."
+    ;;
+  note-create)
+    curl --fail --silent --show-error \
+      --header 'Content-Type: application/json' \
+      --data '{"title":"ephemeral-render-note","body":"created before spin-down"}' \
+      "$BASE_URL/notes" \
+      | tee "$EVIDENCE_DIR/note-created.json"
+    echo
+    echo "Note recorded. Leave the Render service idle for 20+ minutes before running note-check."
+    ;;
+  note-check)
+    curl --fail --silent --show-error "$BASE_URL/notes" \
+      | tee "$EVIDENCE_DIR/notes-after-cold.json"
+    echo
     ;;
   *)
-    echo "Mode must be verify, warm, or cold" >&2
+    echo "Mode must be verify, warm, cold, note-create, or note-check" >&2
     exit 2
     ;;
 esac

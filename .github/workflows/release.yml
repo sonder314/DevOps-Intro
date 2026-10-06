@@ -49,3 +49,12 @@ jobs:
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.version=${{ github.ref_name }}
+
+      - name: Trigger Render deployment
+        env:
+          IMAGE_TAG: ${{ github.ref_name }}
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          test -n "$RENDER_DEPLOY_HOOK_URL"
+          curl --fail --silent --show-error --request POST \
+            "${RENDER_DEPLOY_HOOK_URL}&imgURL=ghcr.io%2Fsonder314%2Fdevops-intro%2Fquicknotes%3A${IMAGE_TAG}"
