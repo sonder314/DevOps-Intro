@@ -11,8 +11,6 @@ jobs:
   build-a:
     name: Independent build A
     runs-on: ubuntu-24.04
-    env:
-      LAB11_DELIBERATE_DIVERGENCE: "true"
     outputs:
       digest: ${{ steps.digest.outputs.digest }}
     steps:
@@ -30,9 +28,6 @@ jobs:
         shell: bash
         run: |
           digest="$(sha256sum result | awk '{print $1}')"
-          if [[ "${LAB11_DELIBERATE_DIVERGENCE}" == "true" ]]; then
-            digest="${digest}-deliberate-divergence"
-          fi
           echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
           echo "Build A: ${digest}"
 

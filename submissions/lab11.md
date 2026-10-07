@@ -120,7 +120,7 @@ My first cross-environment image comparison failed even though the executable NA
 
 The [`nix-repro.yml`](../.github/workflows/nix-repro.yml) workflow starts two independent Ubuntu runners in parallel. Each installs the same SHA-pinned Nix action, builds `.#docker`, and exports the tarball digest. A third job compares the outputs and fails on missing or unequal values.
 
-- Deliberately broken red run: PENDING_RED_RUN_URL
+- Deliberately broken red run: https://github.com/sonder314/DevOps-Intro/actions/runs/37652698651
 - Corrected green run: PENDING_GREEN_RUN_URL
 
 Matching green-run excerpt:
