@@ -1,0 +1,79 @@
+name: Nix reproducibility
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-a:
+    name: Independent build A
+    runs-on: ubuntu-24.04
+    env:
+      LAB11_DELIBERATE_DIVERGENCE: "true"
+    outputs:
+      digest: ${{ steps.digest.outputs.digest }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+
+      - name: Build deterministic image
+        run: nix build .#docker --print-build-logs
+
+      - name: Record image digest
+        id: digest
+        shell: bash
+        run: |
+          digest="$(sha256sum result | awk '{print $1}')"
+          if [[ "${LAB11_DELIBERATE_DIVERGENCE}" == "true" ]]; then
+            digest="${digest}-deliberate-divergence"
+          fi
+          echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
+          echo "Build A: ${digest}"
+
+  build-b:
+    name: Independent build B
+    runs-on: ubuntu-24.04
+    outputs:
+      digest: ${{ steps.digest.outputs.digest }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+
+      - name: Build deterministic image
+        run: nix build .#docker --print-build-logs
+
+      - name: Record image digest
+        id: digest
+        shell: bash
+        run: |
+          digest="$(sha256sum result | awk '{print $1}')"
+          echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
+          echo "Build B: ${digest}"
+
+  compare:
+    name: Compare independent digests
+    runs-on: ubuntu-24.04
+    needs:
+      - build-a
+      - build-b
+    env:
+      DIGEST_A: ${{ needs.build-a.outputs.digest }}
+      DIGEST_B: ${{ needs.build-b.outputs.digest }}
+    steps:
+      - name: Require identical image digests
+        shell: bash
+        run: |
+          echo "Build A: ${DIGEST_A}"
+          echo "Build B: ${DIGEST_B}"
+          test -n "${DIGEST_A}"
+          test -n "${DIGEST_B}"
+          test "${DIGEST_A}" = "${DIGEST_B}"
