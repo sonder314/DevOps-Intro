@@ -121,12 +121,13 @@ My first cross-environment image comparison failed even though the executable NA
 The [`nix-repro.yml`](../.github/workflows/nix-repro.yml) workflow starts two independent Ubuntu runners in parallel. Each installs the same SHA-pinned Nix action, builds `.#docker`, and exports the tarball digest. A third job compares the outputs and fails on missing or unequal values.
 
 - Deliberately broken red run: https://github.com/sonder314/DevOps-Intro/actions/runs/37652698651
-- Corrected green run: PENDING_GREEN_RUN_URL
+- Corrected green run: https://github.com/sonder314/DevOps-Intro/actions/runs/37653090681
 
 Matching green-run excerpt:
 
 ```text
-PENDING_CI_DIGESTS
+Build A: 0504125c2cbb10c967f9858adfff66392161e711e340ed82e60e1f802b055149
+Build B: 0504125c2cbb10c967f9858adfff66392161e711e340ed82e60e1f802b055149
 ```
 
 #### h) Why is CI evidence load-bearing?
